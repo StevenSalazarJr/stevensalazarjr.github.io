@@ -1,0 +1,83 @@
+<!-- ===================== landscape-temp.html ===================== -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Landscape</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* Base styles */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin:0; font-family:'Inter',sans-serif; background:#f7f7f7; }
+
+.gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; padding:40px; padding-top:100px; }
+.gallery img { width:100%; height:auto; border-radius:14px; display:block; }
+
+/* Header */
+header {
+position:fixed; width:100%; top:0; display:flex; justify-content:space-between; align-items:center;
+padding:20px 40px; background:rgba(255,255,255,0.7); backdrop-filter:blur(10px); z-index:1000;
+}
+
+/* Logo */
+header > a { flex-shrink:0; text-decoration:none; color:#333; }
+header > a h2 { margin:0; font-size:18px; white-space:nowrap; }
+
+/* Nav */
+nav { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:0 18px; min-width:0; }
+nav a { text-decoration:none; color:#333; font-size:14px; white-space:nowrap; }
+
+/* Hamburger */
+.menu-toggle { display:none; font-size:22px; cursor:pointer; flex-shrink:0; line-height:1; padding:4px; }
+
+footer { text-align:center; padding:40px; color:#888; }
+
+@media(max-width:768px){
+  .menu-toggle { display:block; }
+  nav {
+    display:none; position:absolute; top:70px; right:20px;
+    background:white; padding:15px; border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1); flex-direction:column; gap:0;
+  }
+  nav a { margin:10px 0; }
+  nav.active { display:flex; }
+}
+
+/* Prevent visited links from turning purple */
+a:visited { color:#333; }
+</style>
+</head>
+<body>
+
+<header>
+<a href="index.html"><h2>My Photography</h2></a>
+<div class="menu-toggle" onclick="toggleMenu()">☰</div>
+<nav id="nav-menu">
+<a href="index.html">Home</a>
+<a href="landscape.html">Landscape</a>
+<a href="nature.html">Nature</a>
+<a href="astro.html">Astro</a>
+<a href="index.html#about">About</a>
+</nav>
+</header>
+
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470">
+<img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4">
+<img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c">
+<img src="https://images.unsplash.com/photo-1501854140801-50d01698950b">
+<img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b">
+<img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429">
+</div>
+
+<footer>© 2026 My Photography</footer>
+
+<script>
+function toggleMenu(){
+  document.getElementById('nav-menu').classList.toggle('active');
+}
+</script>
+
+</body>
+</html>
