@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Photography</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:     #f4f2ee;
+  --ink:    #1a1814;
+  --muted:  #8a8680;
+  --accent: #b5924c;
+  --white:  #ffffff;
+  --radius: 12px;
+  --ease:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 48px;
+  background: rgba(244, 242, 238, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 1000;
+  border-bottom: 1px solid rgba(26,24,20,0.07);
+}
+
+.logo {
+  flex-shrink: 0;
+  text-decoration: none;
+  color: var(--ink);
+}
+.logo h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0 28px;
+  min-width: 0;
+}
+nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+nav a:hover { color: var(--ink); }
+a:visited { color: inherit; }
+
+/* Admin button in nav */
+.nav-admin-btn {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: 1px solid rgba(26,24,20,0.18);
+  border-radius: 20px;
+  padding: 5px 14px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  transition: border-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+.nav-admin-btn:hover { color: var(--ink); border-color: var(--ink); }
+.nav-admin-btn.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
+
+.menu-toggle {
+  display: none;
+  font-size: 22px;
+  cursor: pointer;
+  flex-shrink: 0;
+  color: var(--ink);
+  line-height: 1;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  header { padding: 18px 24px; }
+  .menu-toggle { display: block; }
+  nav {
+    display: none;
+    position: absolute;
+    top: 65px;
+    right: 20px;
+    background: var(--white);
+    padding: 18px 24px;
+    border-radius: var(--radius);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+    flex-direction: column;
+    gap: 0;
+    min-width: 160px;
+  }
+  nav a { margin: 10px 0; }
+  nav .nav-admin-btn { margin: 10px 0; }
+  nav.active { display: flex; }
+}
+
+/* ── Hero ── */
+.hero {
+  height: 100vh;
+  background: url('https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1600') center/cover no-repeat;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 48px 64px;
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,24,20,0.65) 0%, rgba(26,24,20,0.08) 55%, transparent 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: var(--white);
+}
+.hero-content h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(48px, 7vw, 88px);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.hero-content h1 em {
+  font-style: italic;
+  color: rgba(255,255,255,0.7);
+}
+.hero-content p {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  font-weight: 300;
+}
+
+/* ── Section label ── */
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(26,24,20,0.1);
+}
+
+/* ── Gallery sections ── */
+.gallery-section {
+  padding: 80px 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.masonry {
+  columns: 3;
+  column-gap: 16px;
+}
+@media (max-width: 1024px) { .masonry { columns: 2; } }
+@media (max-width: 600px)  { .masonry { columns: 1; } }
+
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+.masonry-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius);
+  transform: scale(1);
+  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
+}
+
+.masonry-item:hover img {
+  transform: scale(1.045);
+  box-shadow: 0 20px 50px rgba(26,24,20,0.2);
+}
+
+.masonry-item .caption {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,24,20,0.52) 0%, transparent 50%);
+  border-radius: var(--radius);
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+  display: flex;
+  align-items: flex-end;
+  padding: 18px;
+  pointer-events: none;
+}
+.masonry-item:hover .caption { opacity: 1; }
+.caption span {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.02em;
+  flex: 1;
+}
+
+/* Delete button (admin mode) */
+.delete-btn {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  background: rgba(10,9,8,0.7);
+  color: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 50%;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: background 0.2s;
+}
+.delete-btn:hover { background: rgba(180,40,40,0.85); color: #fff; }
+body.admin-mode .delete-btn { display: flex; }
+
+/* ── Divider ── */
+.divider {
+  width: 48px;
+  height: 1px;
+  background: var(--accent);
+  margin: 0 auto;
+  opacity: 0.45;
+}
+
+/* ── About ── */
+#about {
+  padding: 80px 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+#about img {
+  width: 100%;
+  border-radius: var(--radius);
+  display: block;
+}
+.about-text .section-label { margin-bottom: 24px; }
+.about-text h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.about-text p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.85;
+  font-weight: 300;
+}
+@media (max-width: 768px) {
+  #about { grid-template-columns: 1fr; gap: 32px; }
+  .gallery-section, #about { padding: 56px 24px; }
+  .hero { padding: 0 24px 48px; }
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding: 48px;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-top: 1px solid rgba(26,24,20,0.08);
+  margin-top: 24px;
+}
+
+/* ── Lightbox ── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,9,8,0.96);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  cursor: zoom-out;
+}
+.lightbox.open {
+  display: flex;
+  animation: lbFadeIn 0.28s var(--ease);
+}
+@keyframes lbFadeIn { from { opacity:0; } to { opacity:1; } }
+.lightbox img {
+  max-width: 100%;
+  max-height: 92vh;
+  border-radius: 6px;
+  object-fit: contain;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+  animation: lbScale 0.32s var(--ease);
+  cursor: default;
+}
+@keyframes lbScale {
+  from { transform:scale(0.93); opacity:0; }
+  to   { transform:scale(1);    opacity:1; }
+}
+.lightbox-close {
+  position: absolute;
+  top: 18px; right: 26px;
+  color: rgba(255,255,255,0.5);
+  font-size: 36px;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+  background: none; border: none;
+  font-family: inherit;
+}
+.lightbox-close:hover { color: var(--white); }
+.lightbox-prev, .lightbox-next {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  color: rgba(255,255,255,0.45);
+  font-size: 44px;
+  cursor: pointer;
+  background: none; border: none;
+  font-family: inherit;
+  line-height: 1; padding: 16px;
+  transition: color 0.2s;
+  user-select: none;
+}
+.lightbox-prev { left: 8px; }
+.lightbox-next { right: 8px; }
+.lightbox-prev:hover, .lightbox-next:hover { color: var(--white); }
+.lightbox-counter {
+  position: absolute;
+  bottom: 20px; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.35);
+  font-size: 11px; letter-spacing: 0.15em;
+  font-family: 'Jost', sans-serif;
+}
+
+/* ── Login modal ── */
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,9,8,0.6);
+  z-index: 8000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-backdrop.open {
+  display: flex;
+  animation: lbFadeIn 0.22s var(--ease);
+}
+.modal {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 40px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.18);
+}
+.modal h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+.modal p.modal-sub {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 28px;
+}
+.modal input[type="password"],
+.modal input[type="text"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid rgba(26,24,20,0.15);
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  margin-bottom: 14px;
+}
+.modal input:focus { border-color: var(--ink); }
+.modal-error {
+  font-size: 12px;
+  color: #c0392b;
+  margin-bottom: 12px;
+  min-height: 18px;
+}
+.modal-btn {
+  width: 100%;
+  padding: 13px;
+  background: var(--ink);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.modal-btn:hover { opacity: 0.85; }
+.modal-cancel {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+.modal-cancel:hover { color: var(--ink); }
+
+/* ── Upload panel ── */
+.upload-panel {
+  display: none;
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 7000;
+  background: var(--white);
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  width: 320px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.16);
+  animation: lbFadeIn 0.25s var(--ease);
+}
+body.admin-mode .upload-panel { display: block; }
+
+.upload-panel h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 18px;
+  margin-bottom: 18px;
+}
+
+.upload-panel select,
+.upload-panel input[type="text"] {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid rgba(26,24,20,0.15);
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 13px;
+  background: var(--bg);
+  color: var(--ink);
+  outline: none;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.upload-panel select:focus,
+.upload-panel input:focus { border-color: var(--ink); }
+
+/* Drop zone */
+.drop-zone {
+  border: 1.5px dashed rgba(26,24,20,0.2);
+  border-radius: 10px;
+  padding: 22px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 14px;
+  position: relative;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--accent);
+  background: rgba(181,146,76,0.05);
+}
+.drop-zone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+.drop-zone-icon { font-size: 26px; margin-bottom: 6px; }
+.drop-zone p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.drop-zone .chosen-file {
+  font-size: 12px;
+  color: var(--ink);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* Preview thumbnail */
+#upload-preview {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  display: none;
+  max-height: 140px;
+  object-fit: cover;
+}
+
+.upload-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--ink);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.upload-btn:hover { opacity: 0.85; }
+.upload-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.upload-status {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+  min-height: 18px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <a class="logo" href="index.html"><h2>My Photography</h2></a>
+  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">☰</button>
+  <nav id="nav-menu">
+    <a href="#landscape">Landscape</a>
+    <a href="#wildlife">Wildlife</a>
+    <a href="#astro">Astro</a>
+    <a href="#about">About</a>
+    <button class="nav-admin-btn" id="admin-toggle-btn" onclick="handleAdminBtn()">Admin</button>
+  </nav>
+</header>
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>Capturing<br><em>Moments</em></h1>
+    <p>Landscape &nbsp;·&nbsp; Wildlife &nbsp;·&nbsp; Astro</p>
+  </div>
+</section>
+
+<!-- ── Landscape ── -->
+<div class="gallery-section" id="landscape">
+  <div class="section-label">Landscape</div>
+  <div class="masonry" data-gallery="landscape">
+    <div class="masonry-item" data-index="0" data-id="default-l0">
+      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=900" alt="Mountain Light" loading="lazy">
+      <div class="caption"><span>Mountain Light</span></div>
+    </div>
+    <div class="masonry-item" data-index="1" data-id="default-l1">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900" alt="Alpine Ridge" loading="lazy">
+      <div class="caption"><span>Alpine Ridge</span></div>
+    </div>
+    <div class="masonry-item" data-index="2" data-id="default-l2">
+      <img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=900" alt="Still Waters" loading="lazy">
+      <div class="caption"><span>Still Waters</span></div>
+    </div>
+    <div class="masonry-item" data-index="3" data-id="default-l3">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900" alt="Open Plains" loading="lazy">
+      <div class="caption"><span>Open Plains</span></div>
+    </div>
+    <div class="masonry-item" data-index="4" data-id="default-l4">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900" alt="Cliffside" loading="lazy">
+      <div class="caption"><span>Cliffside</span></div>
+    </div>
+    <div class="masonry-item" data-index="5" data-id="default-l5">
+      <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=900" alt="Golden Hour" loading="lazy">
+      <div class="caption"><span>Golden Hour</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── Wildlife ── -->
+<div class="gallery-section" id="wildlife">
+  <div class="section-label">Wildlife</div>
+  <div class="masonry" data-gallery="wildlife">
+    <div class="masonry-item" data-index="0" data-id="default-w0">
+      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900" alt="Forest Path" loading="lazy">
+      <div class="caption"><span>Forest Path</span></div>
+    </div>
+    <div class="masonry-item" data-index="1" data-id="default-w1">
+      <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=900" alt="Wildflower Bloom" loading="lazy">
+      <div class="caption"><span>Wildflower Bloom</span></div>
+    </div>
+    <div class="masonry-item" data-index="2" data-id="default-w2">
+      <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=900" alt="Canopy" loading="lazy">
+      <div class="caption"><span>Canopy</span></div>
+    </div>
+    <div class="masonry-item" data-index="3" data-id="default-w3">
+      <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=900" alt="Morning Dew" loading="lazy">
+      <div class="caption"><span>Morning Dew</span></div>
+    </div>
+    <div class="masonry-item" data-index="4" data-id="default-w4">
+      <img src="https://images.unsplash.com/photo-1504700610630-ac6aba3536d3?w=900" alt="Fern Grove" loading="lazy">
+      <div class="caption"><span>Fern Grove</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── Astro ── -->
+<div class="gallery-section" id="astro">
+  <div class="section-label">Astro</div>
+  <div class="masonry" data-gallery="astro">
+    <div class="masonry-item" data-index="0" data-id="default-a0">
+      <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=900" alt="Milky Way" loading="lazy">
+      <div class="caption"><span>Milky Way</span></div>
+    </div>
+    <div class="masonry-item" data-index="1" data-id="default-a1">
+      <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=900" alt="Star Trails" loading="lazy">
+      <div class="caption"><span>Star Trails</span></div>
+    </div>
+    <div class="masonry-item" data-index="2" data-id="default-a2">
+      <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900" alt="Deep Sky" loading="lazy">
+      <div class="caption"><span>Deep Sky</span></div>
+    </div>
+    <div class="masonry-item" data-index="3" data-id="default-a3">
+      <img src="https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=900" alt="Nebula" loading="lazy">
+      <div class="caption"><span>Nebula</span></div>
+    </div>
+    <div class="masonry-item" data-index="4" data-id="default-a4">
+      <img src="https://images.unsplash.com/photo-1506443432602-ac2fcd6f54e0?w=900" alt="Rising Moon" loading="lazy">
+      <div class="caption"><span>Rising Moon</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── About ── -->
+<section id="about">
+  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900" alt="Photographer">
+  <div class="about-text">
+    <div class="section-label">About Me</div>
+    <h2>Finding beauty<br>in every frame</h2>
+    <p>I'm a photographer drawn to the quiet drama of the natural world — the way light bends over a ridge at dusk, the silence of a forest at dawn, the infinite depth of a clear night sky. Every image is an attempt to hold a moment still.</p>
+  </div>
+</section>
+
+<footer>© 2026 My Photography &nbsp;·&nbsp; All rights reserved</footer>
+
+<!-- ── Lightbox ── -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <button class="lightbox-prev" onclick="shiftImage(-1)">‹</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-next" onclick="shiftImage(1)">›</button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
+
+<!-- ── Login modal ── -->
+<div class="modal-backdrop" id="login-modal">
+  <div class="modal">
+    <h3>Admin Login</h3>
+    <p class="modal-sub">Enter your password to manage the gallery</p>
+    <input type="password" id="login-pw" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="modal-error" id="login-error"></div>
+    <button class="modal-btn" onclick="doLogin()">Sign In</button>
+    <span class="modal-cancel" onclick="closeLoginModal()">Cancel</span>
+  </div>
+</div>
+
+<!-- ── Upload panel ── -->
+<div class="upload-panel" id="upload-panel">
+  <h4>Add Photo</h4>
+  <select id="upload-category">
+    <option value="landscape">Landscape</option>
+    <option value="wildlife">Wildlife</option>
+    <option value="astro">Astro</option>
+  </select>
+  <input type="text" id="upload-caption" placeholder="Caption (optional)">
+  <img id="upload-preview" src="" alt="Preview">
+  <div class="drop-zone" id="drop-zone">
+    <input type="file" id="upload-file" accept="image/*" onchange="handleFileSelect(this.files[0])">
+    <div class="drop-zone-icon">🖼</div>
+    <p>Click or drag & drop an image</p>
+    <div class="chosen-file" id="chosen-file-name"></div>
+  </div>
+  <button class="upload-btn" id="upload-btn" onclick="doUpload()" disabled>Add to Gallery</button>
+  <div class="upload-status" id="upload-status"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════ */
+const ADMIN_PASSWORD  = 'photo2026';                          // change this
+const CLOUDINARY_NAME = 'dg068w2uf';
+const CLOUDINARY_PRESET = 'photography_upload';
+const SUPABASE_URL    = 'https://ldzirnmjahukapoxjkxz.supabase.co';
+const SUPABASE_KEY    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxkemlybm1qYWh1a2Fwb3hqa3h6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMzcwMDUsImV4cCI6MjA5NDYxMzAwNX0.rodxTAprEFhr1eC29UXTkK3SuSF0SyiKlQ0nTju9w2I';
+
+/* ── Supabase helpers ── */
+const SB_HEADERS = {
+  'apikey': SUPABASE_KEY,
+  'Authorization': 'Bearer ' + SUPABASE_KEY,
+  'Content-Type': 'application/json'
+};
+
+async function sbFetch(path, opts = {}){
+  const res = await fetch(SUPABASE_URL + path, {
+    headers: { ...SB_HEADERS, ...(opts.headers || {}) },
+    ...opts
+  });
+  if(!res.ok){
+    const err = await res.text();
+    throw new Error('Supabase error: ' + err);
+  }
+  return res.status === 204 ? null : res.json();
+}
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+let isAdmin        = false;
+let galleries      = {};
+let currentGallery = null;
+let currentIndex   = 0;
+let pendingFile    = null;
+
+/* ═══════════════════════════════════════
+   MOBILE NAV
+═══════════════════════════════════════ */
+function toggleMenu(){
+  document.getElementById('nav-menu').classList.toggle('active');
+}
+
+/* ═══════════════════════════════════════
+   GALLERY INIT
+═══════════════════════════════════════ */
+async function initGalleries(){
+  // 1. Seed galleries object from static HTML
+  document.querySelectorAll('.masonry[data-gallery]').forEach(grid => {
+    const key = grid.dataset.gallery;
+    galleries[key] = Array.from(grid.querySelectorAll('.masonry-item')).map(item => ({
+      src: item.querySelector('img').src,
+      alt: item.querySelector('img').alt,
+      id:  item.dataset.id,
+      db:  false
+    }));
+  });
+
+  // 2. Load uploaded photos from Supabase and append to DOM
+  try {
+    const rows = await sbFetch('/rest/v1/photos?select=*&order=created_at.asc');
+    rows.forEach(row => {
+      if(!galleries[row.gallery]) galleries[row.gallery] = [];
+      if(!galleries[row.gallery].find(p => p.id === String(row.id))){
+        galleries[row.gallery].push({ src: row.url, alt: row.caption, id: String(row.id), db: true });
+        appendPhotoToDOM(row.gallery, row.url, row.caption, String(row.id));
+      }
+    });
+  } catch(e){
+    console.warn('Could not load photos from Supabase:', e.message);
+  }
+
+  rebindGalleryClicks();
+}
+
+function rebindGalleryClicks(){
+  document.querySelectorAll('.masonry[data-gallery]').forEach(grid => {
+    const key = grid.dataset.gallery;
+    Array.from(grid.querySelectorAll('.masonry-item')).forEach((item, i) => {
+      const fresh = item.cloneNode(true);
+      item.parentNode.replaceChild(fresh, item);
+      fresh.dataset.index = i;
+      fresh.addEventListener('click', () => {
+        if(document.body.classList.contains('admin-mode')) return;
+        openLightbox(key, i);
+      });
+      const del = fresh.querySelector('.delete-btn');
+      if(del) del.addEventListener('click', e => {
+        e.stopPropagation();
+        deletePhoto(key, fresh.dataset.id, fresh);
+      });
+    });
+    // Re-sync galleries array from current DOM
+    galleries[key] = Array.from(grid.querySelectorAll('.masonry-item')).map(el => ({
+      src: el.querySelector('img').src,
+      alt: el.querySelector('img').alt,
+      id:  el.dataset.id,
+      db:  !!el.dataset.db
+    }));
+  });
+}
+
+/* ═══════════════════════════════════════
+   DOM HELPERS
+═══════════════════════════════════════ */
+function appendPhotoToDOM(gallery, src, alt, id){
+  const grid = document.querySelector(`.masonry[data-gallery="${gallery}"]`);
+  if(!grid) return;
+  const count = grid.querySelectorAll('.masonry-item').length;
+  const wrap  = document.createElement('div');
+  wrap.className     = 'masonry-item';
+  wrap.dataset.index = count;
+  wrap.dataset.id    = id;
+  wrap.dataset.db    = '1';
+  wrap.innerHTML = `
+    <img src="${src}" alt="${alt || ''}" loading="lazy">
+    <div class="caption"><span>${alt || ''}</span></div>
+    <button class="delete-btn" title="Remove photo">×</button>
+  `;
+  grid.appendChild(wrap);
+}
+
+async function deletePhoto(gallery, id, element){
+  if(!isAdmin) return;
+  if(!confirm('Remove this photo from the gallery?')) return;
+  // Only attempt DB delete for uploaded (non-default) photos
+  if(!id.startsWith('default-')){
+    try {
+      await sbFetch(`/rest/v1/photos?id=eq.${id}`, { method: 'DELETE' });
+    } catch(e){
+      alert('Could not delete from database: ' + e.message);
+      return;
+    }
+  }
+  element.remove();
+  galleries[gallery] = galleries[gallery].filter(p => p.id !== id);
+  rebindGalleryClicks();
+}
+
+/* ═══════════════════════════════════════
+   LIGHTBOX
+═══════════════════════════════════════ */
+function openLightbox(gallery, index){
+  const grid = document.querySelector(`.masonry[data-gallery="${gallery}"]`);
+  if(!grid) return;
+  galleries[gallery] = Array.from(grid.querySelectorAll('.masonry-item')).map(item => ({
+    src: item.querySelector('img').src,
+    alt: item.querySelector('img').alt,
+    id:  item.dataset.id
+  }));
+  currentGallery = gallery;
+  currentIndex   = index;
+  renderLightboxImage();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderLightboxImage(){
+  const entry = galleries[currentGallery][currentIndex];
+  if(!entry) return;
+  const img = document.getElementById('lightbox-img');
+  img.style.animation = 'none';
+  img.offsetHeight;
+  img.style.animation = '';
+  img.src = entry.src;
+  img.alt = entry.alt || '';
+  document.getElementById('lightbox-counter').textContent =
+    `${currentIndex + 1} / ${galleries[currentGallery].length}`;
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function shiftImage(dir){
+  const len = galleries[currentGallery].length;
+  currentIndex = (currentIndex + dir + len) % len;
+  renderLightboxImage();
+}
+
+document.getElementById('lightbox').addEventListener('click', e => {
+  if(e.target === document.getElementById('lightbox')) closeLightbox();
+});
+
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key === 'ArrowRight') shiftImage(1);
+  if(e.key === 'ArrowLeft')  shiftImage(-1);
+  if(e.key === 'Escape')     closeLightbox();
+});
+
+/* ═══════════════════════════════════════
+   ADMIN LOGIN / LOGOUT
+═══════════════════════════════════════ */
+function handleAdminBtn(){
+  if(isAdmin){ logOut(); } else { openLoginModal(); }
+}
+
+function openLoginModal(){
+  document.getElementById('login-modal').classList.add('open');
+  document.getElementById('login-pw').value = '';
+  document.getElementById('login-error').textContent = '';
+  setTimeout(() => document.getElementById('login-pw').focus(), 100);
+}
+
+function closeLoginModal(){
+  document.getElementById('login-modal').classList.remove('open');
+}
+
+function doLogin(){
+  const pw = document.getElementById('login-pw').value;
+  if(pw === ADMIN_PASSWORD){
+    isAdmin = true;
+    closeLoginModal();
+    document.body.classList.add('admin-mode');
+    document.getElementById('admin-toggle-btn').textContent = 'Log Out';
+    document.getElementById('admin-toggle-btn').classList.add('active');
+  } else {
+    document.getElementById('login-error').textContent = 'Incorrect password. Try again.';
+    document.getElementById('login-pw').value = '';
+    document.getElementById('login-pw').focus();
+  }
+}
+
+function logOut(){
+  isAdmin = false;
+  document.body.classList.remove('admin-mode');
+  document.getElementById('admin-toggle-btn').textContent = 'Admin';
+  document.getElementById('admin-toggle-btn').classList.remove('active');
+  resetUploadForm();
+}
+
+document.getElementById('login-modal').addEventListener('click', e => {
+  if(e.target === document.getElementById('login-modal')) closeLoginModal();
+});
+
+/* ═══════════════════════════════════════
+   FILE SELECT / PREVIEW
+═══════════════════════════════════════ */
+function handleFileSelect(file){
+  if(!file || !file.type.startsWith('image/')) return;
+  pendingFile = file;
+  document.getElementById('chosen-file-name').textContent = file.name;
+  document.getElementById('upload-btn').disabled = false;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById('upload-preview');
+    prev.src   = e.target.result;
+    prev.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+const dropZone = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if(file) handleFileSelect(file);
+});
+
+/* ═══════════════════════════════════════
+   UPLOAD — Cloudinary → Supabase
+═══════════════════════════════════════ */
+async function doUpload(){
+  if(!pendingFile || !isAdmin) return;
+  const gallery = document.getElementById('upload-category').value;
+  const caption = document.getElementById('upload-caption').value.trim()
+                  || pendingFile.name.replace(/\.[^.]+$/, '');
+  const btn    = document.getElementById('upload-btn');
+  const status = document.getElementById('upload-status');
+
+  btn.disabled = true;
+  status.textContent = 'Uploading to Cloudinary…';
+
+  try {
+    // Step 1: Upload image to Cloudinary
+    const formData = new FormData();
+    formData.append('file', pendingFile);
+    formData.append('upload_preset', CLOUDINARY_PRESET);
+    formData.append('folder', 'portfolio');
+
+    const cdnRes  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`, {
+      method: 'POST',
+      body: formData
+    });
+    if(!cdnRes.ok) throw new Error('Cloudinary upload failed');
+    const cdnData = await cdnRes.json();
+    const url     = cdnData.secure_url;
+
+    status.textContent = 'Saving to database…';
+
+    // Step 2: Save record to Supabase
+    const rows = await sbFetch('/rest/v1/photos', {
+      method: 'POST',
+      headers: { 'Prefer': 'return=representation' },
+      body: JSON.stringify({ gallery, caption, url })
+    });
+    const newId = String(rows[0].id);
+
+    // Step 3: Add to DOM
+    appendPhotoToDOM(gallery, url, caption, newId);
+    if(!galleries[gallery]) galleries[gallery] = [];
+    galleries[gallery].push({ src: url, alt: caption, id: newId, db: true });
+    rebindGalleryClicks();
+
+    status.textContent = '✓ Photo added!';
+    setTimeout(() => { status.textContent = ''; }, 2500);
+    resetUploadForm();
+
+  } catch(e){
+    status.textContent = '✗ Error: ' + e.message;
+    btn.disabled = false;
+  }
+}
+
+function resetUploadForm(){
+  pendingFile = null;
+  document.getElementById('upload-file').value = '';
+  document.getElementById('upload-caption').value = '';
+  document.getElementById('chosen-file-name').textContent = '';
+  const prev = document.getElementById('upload-preview');
+  prev.src   = '';
+  prev.style.display = 'none';
+  document.getElementById('upload-btn').disabled = true;
+  document.getElementById('upload-status').textContent = '';
+}
+
+/* ═══════════════════════════════════════
+   BOOT
+═══════════════════════════════════════ */
+initGalleries();
+</script>
+</body>
+</html>
