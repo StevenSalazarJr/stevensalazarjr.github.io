@@ -132,7 +132,7 @@ a:visited { color: inherit; }
 /* ── Hero ── */
 .hero {
   height: 100vh;
-  background: url('https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1600') center/cover no-repeat;
+  background: url('banner.jpg') center/cover no-repeat;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -282,19 +282,12 @@ body.admin-mode .delete-btn { display: flex; }
 /* ── About ── */
 #about {
   padding: 80px 48px;
-  max-width: 1400px;
+  max-width: 680px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: center;
+  text-align: center;
 }
-#about img {
-  width: 100%;
-  border-radius: var(--radius);
-  display: block;
-}
-.about-text .section-label { margin-bottom: 24px; }
+.about-text .section-label { margin-bottom: 24px; justify-content: center; }
+.about-text .section-label::after { display: none; }
 .about-text h2 {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 300;
@@ -309,8 +302,8 @@ body.admin-mode .delete-btn { display: flex; }
   font-weight: 300;
 }
 @media (max-width: 768px) {
-  #about { grid-template-columns: 1fr; gap: 32px; }
-  .gallery-section, #about { padding: 56px 24px; }
+  #about { padding: 56px 24px; }
+  .gallery-section { padding: 56px 24px; }
   .hero { padding: 0 24px 48px; }
 }
 
@@ -602,7 +595,7 @@ body.admin-mode .upload-panel { display: block; }
 <!-- ── Hero ── -->
 <section class="hero">
   <div class="hero-content">
-    <h1>Capturing<br><em>Moments</em></h1>
+    <h1>Steven Salazar</h1>
     <p>Landscape &nbsp;·&nbsp; Wildlife &nbsp;·&nbsp; Astro</p>
   </div>
 </section>
@@ -611,30 +604,6 @@ body.admin-mode .upload-panel { display: block; }
 <div class="gallery-section" id="landscape">
   <div class="section-label">Landscape</div>
   <div class="masonry" data-gallery="landscape">
-    <div class="masonry-item" data-index="0" data-id="default-l0">
-      <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=900" alt="Mountain Light" loading="lazy">
-      <div class="caption"><span>Mountain Light</span></div>
-    </div>
-    <div class="masonry-item" data-index="1" data-id="default-l1">
-      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900" alt="Alpine Ridge" loading="lazy">
-      <div class="caption"><span>Alpine Ridge</span></div>
-    </div>
-    <div class="masonry-item" data-index="2" data-id="default-l2">
-      <img src="https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=900" alt="Still Waters" loading="lazy">
-      <div class="caption"><span>Still Waters</span></div>
-    </div>
-    <div class="masonry-item" data-index="3" data-id="default-l3">
-      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=900" alt="Open Plains" loading="lazy">
-      <div class="caption"><span>Open Plains</span></div>
-    </div>
-    <div class="masonry-item" data-index="4" data-id="default-l4">
-      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900" alt="Cliffside" loading="lazy">
-      <div class="caption"><span>Cliffside</span></div>
-    </div>
-    <div class="masonry-item" data-index="5" data-id="default-l5">
-      <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=900" alt="Golden Hour" loading="lazy">
-      <div class="caption"><span>Golden Hour</span></div>
-    </div>
   </div>
 </div>
 
@@ -644,26 +613,6 @@ body.admin-mode .upload-panel { display: block; }
 <div class="gallery-section" id="wildlife">
   <div class="section-label">Wildlife</div>
   <div class="masonry" data-gallery="wildlife">
-    <div class="masonry-item" data-index="0" data-id="default-w0">
-      <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900" alt="Forest Path" loading="lazy">
-      <div class="caption"><span>Forest Path</span></div>
-    </div>
-    <div class="masonry-item" data-index="1" data-id="default-w1">
-      <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=900" alt="Wildflower Bloom" loading="lazy">
-      <div class="caption"><span>Wildflower Bloom</span></div>
-    </div>
-    <div class="masonry-item" data-index="2" data-id="default-w2">
-      <img src="https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=900" alt="Canopy" loading="lazy">
-      <div class="caption"><span>Canopy</span></div>
-    </div>
-    <div class="masonry-item" data-index="3" data-id="default-w3">
-      <img src="https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?w=900" alt="Morning Dew" loading="lazy">
-      <div class="caption"><span>Morning Dew</span></div>
-    </div>
-    <div class="masonry-item" data-index="4" data-id="default-w4">
-      <img src="https://images.unsplash.com/photo-1504700610630-ac6aba3536d3?w=900" alt="Fern Grove" loading="lazy">
-      <div class="caption"><span>Fern Grove</span></div>
-    </div>
   </div>
 </div>
 
@@ -673,26 +622,6 @@ body.admin-mode .upload-panel { display: block; }
 <div class="gallery-section" id="astro">
   <div class="section-label">Astro</div>
   <div class="masonry" data-gallery="astro">
-    <div class="masonry-item" data-index="0" data-id="default-a0">
-      <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=900" alt="Milky Way" loading="lazy">
-      <div class="caption"><span>Milky Way</span></div>
-    </div>
-    <div class="masonry-item" data-index="1" data-id="default-a1">
-      <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=900" alt="Star Trails" loading="lazy">
-      <div class="caption"><span>Star Trails</span></div>
-    </div>
-    <div class="masonry-item" data-index="2" data-id="default-a2">
-      <img src="https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=900" alt="Deep Sky" loading="lazy">
-      <div class="caption"><span>Deep Sky</span></div>
-    </div>
-    <div class="masonry-item" data-index="3" data-id="default-a3">
-      <img src="https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=900" alt="Nebula" loading="lazy">
-      <div class="caption"><span>Nebula</span></div>
-    </div>
-    <div class="masonry-item" data-index="4" data-id="default-a4">
-      <img src="https://images.unsplash.com/photo-1506443432602-ac2fcd6f54e0?w=900" alt="Rising Moon" loading="lazy">
-      <div class="caption"><span>Rising Moon</span></div>
-    </div>
   </div>
 </div>
 
@@ -700,11 +629,10 @@ body.admin-mode .upload-panel { display: block; }
 
 <!-- ── About ── -->
 <section id="about">
-  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=900" alt="Photographer">
   <div class="about-text">
     <div class="section-label">About Me</div>
-    <h2>Finding beauty<br>in every frame</h2>
-    <p>I'm a photographer drawn to the quiet drama of the natural world — the way light bends over a ridge at dusk, the silence of a forest at dawn, the infinite depth of a clear night sky. Every image is an attempt to hold a moment still.</p>
+    <h2>Steven Salazar</h2>
+    <p>Photographer based in Colorado, drawn to landscapes, wildlife, and the night sky.</p>
   </div>
 </section>
 
