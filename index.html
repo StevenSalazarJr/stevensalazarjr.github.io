@@ -602,7 +602,7 @@ body.admin-mode .upload-panel { display: block; }
 <!-- ── Hero ── -->
 <section class="hero">
   <div class="hero-content">
-    <h1>Steven<br><em>Salazar</em></h1>
+    <h1>Capturing<br><em>Moments</em></h1>
     <p>Landscape &nbsp;·&nbsp; Wildlife &nbsp;·&nbsp; Astro</p>
   </div>
 </section>
@@ -1034,9 +1034,9 @@ async function doUpload(){
   try {
     // Step 1: Upload image to Cloudinary
     const formData = new FormData();
-    formData.append('file', pendingFile);
     formData.append('upload_preset', CLOUDINARY_PRESET);
     formData.append('folder', 'portfolio');
+    formData.append('file', pendingFile);
 
     const cdnRes  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`, {
       method: 'POST',
