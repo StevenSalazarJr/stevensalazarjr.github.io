@@ -1042,8 +1042,9 @@ async function doUpload(){
       method: 'POST',
       body: formData
     });
-    if(!cdnRes.ok) throw new Error('Cloudinary upload failed');
     const cdnData = await cdnRes.json();
+    console.log('Cloudinary response:', cdnData);
+    if(!cdnRes.ok) throw new Error('Cloudinary: ' + (cdnData.error?.message || JSON.stringify(cdnData)));
     const url     = cdnData.secure_url;
 
     status.textContent = 'Saving to database…';
