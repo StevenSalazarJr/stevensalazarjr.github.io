@@ -41,6 +41,8 @@ input:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid
 .stepper{display:grid;grid-template-columns:56px 1fr 56px;gap:8px}
 .stepper button{font:700 22px Barlow,sans-serif;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;min-height:48px;cursor:pointer}
 .stepper input{text-align:center}
+input[type=range]{padding:0;min-height:32px;margin-top:14px;background:none;border:0;accent-color:var(--accent)}
+.rng{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
 .save{width:100%;margin-top:18px;min-height:54px;border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:22px;cursor:pointer}
 .save:disabled{opacity:.6}
 .hint{font-size:14px;color:var(--muted);margin-top:8px}.hint b{color:var(--ink);font-weight:600}
@@ -127,6 +129,8 @@ dialog::backdrop{background:rgba(0,0,0,.5)}
           <input id="wt" type="number" inputmode="decimal" min="0" step="2.5" value="135">
           <button type="button" id="plus" aria-label="Add 5 pounds">+5</button>
         </div>
+        <input type="range" id="wslide" min="0" max="405" step="1" value="135" aria-label="Weight slider, 0 to 405 pounds">
+        <div class="rng"><span>0</span><span>405 lb</span></div>
       </div>
       <div class="gap"><label for="rpe">RPE (1–10, optional)</label><input id="rpe" type="number" inputmode="decimal" min="1" max="10" step="0.5" placeholder="8"></div>
       <button class="save" id="save" type="button">Save exercise</button>
@@ -304,13 +308,16 @@ $("types").onclick=async ev=>{
   }
   renderAll();
 };
-const loadInto=e=>{$("ex").value=e.name;$("sets").value=e.sets;$("reps").value=e.reps;$("wt").value=e.weight;$("rpe").value=e.rpe||"";updateHint()};
+const loadInto=e=>{$("ex").value=e.name;$("sets").value=e.sets;$("reps").value=e.reps;$("wt").value=e.weight;$("rpe").value=e.rpe||"";syncW();updateHint()};
 $("ref").onclick=ev=>{
   const b=ev.target.closest("[data-use]");if(!b)return;
   const e=W[b.dataset.k].entries.find(x=>x.id===b.dataset.use);
   loadInto(e);toast("Loaded "+e.name+" – adjust and save");$("wt").focus();
 };
-const bump=n=>{$("wt").value=Math.max(0,(parseFloat($("wt").value)||0)+n)};
+const syncW=()=>{$("wslide").value=$("wt").value};
+const bump=n=>{$("wt").value=Math.max(0,(parseFloat($("wt").value)||0)+n);syncW()};
+$("wslide").addEventListener("input",()=>{$("wt").value=$("wslide").value});
+$("wt").addEventListener("input",syncW);
 $("minus").onclick=()=>bump(-5);$("plus").onclick=()=>bump(5);
 function lastOfExercise(name){
   const n=name.trim().toLowerCase();if(!n)return null;let best=null;
@@ -322,7 +329,7 @@ function updateHint(){
   $("exhint").innerHTML=hintE?`Last time, ${fmt(hintE.k)} (${esc(hintE.t)}): <b>${line(hintE.e)}</b><button class="small-btn" type="button">Use</button>`:"";
 }
 $("ex").addEventListener("input",updateHint);
-$("exhint").onclick=ev=>{if(ev.target.closest("button")&&hintE){const{e}=hintE;$("sets").value=e.sets;$("reps").value=e.reps;$("wt").value=e.weight;$("rpe").value=e.rpe||"";$("wt").focus()}};
+$("exhint").onclick=ev=>{if(ev.target.closest("button")&&hintE){const{e}=hintE;$("sets").value=e.sets;$("reps").value=e.reps;$("wt").value=e.weight;$("rpe").value=e.rpe||"";syncW();$("wt").focus()}};
 
 function readFields(ids){
   const[n,s,r,w,p]=ids.map($);
