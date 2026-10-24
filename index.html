@@ -1,1023 +1,381 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-mode="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Photography</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gym Log">
+<title>Gym Log</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏋️</text></svg>">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
 <style>
-/* ── Reset & base ── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg:     #f4f2ee;
-  --ink:    #1a1814;
-  --muted:  #8a8680;
-  --accent: #b5924c;
-  --white:  #ffffff;
-  --radius: 12px;
-  --ease:   cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Jost', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height: 100vh;
-}
-
-/* ── Header ── */
-header {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px 48px;
-  background: rgba(244, 242, 238, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  z-index: 1000;
-  border-bottom: 1px solid rgba(26,24,20,0.07);
-}
-
-.logo {
-  flex-shrink: 0;
-  text-decoration: none;
-  color: var(--ink);
-}
-.logo h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 300;
-  font-size: 22px;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-}
-
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0 28px;
-  min-width: 0;
-}
-nav a {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: color 0.2s;
-}
-nav a:hover { color: var(--ink); }
-a:visited { color: inherit; }
-
-/* Admin button in nav */
-.nav-admin-btn {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: none;
-  border: 1px solid rgba(26,24,20,0.18);
-  border-radius: 20px;
-  padding: 5px 14px;
-  cursor: pointer;
-  font-family: 'Jost', sans-serif;
-  transition: border-color 0.2s, color 0.2s;
-  white-space: nowrap;
-}
-.nav-admin-btn:hover { color: var(--ink); border-color: var(--ink); }
-.nav-admin-btn.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
-
-.menu-toggle {
-  display: none;
-  font-size: 22px;
-  cursor: pointer;
-  flex-shrink: 0;
-  color: var(--ink);
-  line-height: 1;
-  padding: 4px;
-  background: none;
-  border: none;
-}
-
-@media (max-width: 768px) {
-  header { padding: 18px 24px; }
-  .menu-toggle { display: block; }
-  nav {
-    display: none;
-    position: absolute;
-    top: 65px;
-    right: 20px;
-    background: var(--white);
-    padding: 18px 24px;
-    border-radius: var(--radius);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.12);
-    flex-direction: column;
-    gap: 0;
-    min-width: 160px;
-  }
-  nav a { margin: 10px 0; }
-  nav .nav-admin-btn { margin: 10px 0; }
-  nav.active { display: flex; }
-}
-
-/* ── Hero ── */
-.hero {
-  height: 100vh;
-  background: url('banner.jpg') center/cover no-repeat;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 0 48px 64px;
-  position: relative;
-}
-.hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(26,24,20,0.65) 0%, rgba(26,24,20,0.08) 55%, transparent 100%);
-}
-.hero-content {
-  position: relative;
-  z-index: 2;
-  color: var(--white);
-}
-.hero-content h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 300;
-  font-size: clamp(48px, 7vw, 88px);
-  line-height: 1.0;
-  letter-spacing: -0.01em;
-  margin-bottom: 14px;
-}
-.hero-content h1 em {
-  font-style: italic;
-  color: rgba(255,255,255,0.7);
-}
-.hero-content p {
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
-  font-weight: 300;
-}
-
-/* ── Section label ── */
-.section-label {
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 28px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: rgba(26,24,20,0.1);
-}
-
-/* ── Gallery sections ── */
-.gallery-section {
-  padding: 80px 48px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.masonry {
-  columns: 3;
-  column-gap: 16px;
-}
-@media (max-width: 1024px) { .masonry { columns: 2; } }
-@media (max-width: 600px)  { .masonry { columns: 1; } }
-
-.masonry-item {
-  break-inside: avoid;
-  margin-bottom: 16px;
-  position: relative;
-  border-radius: var(--radius);
-  overflow: hidden;
-  cursor: zoom-in;
-}
-
-.masonry-item img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: var(--radius);
-  transform: scale(1);
-  transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
-}
-
-.masonry-item:hover img {
-  transform: scale(1.045);
-  box-shadow: 0 20px 50px rgba(26,24,20,0.2);
-}
-
-.masonry-item .caption {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(26,24,20,0.52) 0%, transparent 50%);
-  border-radius: var(--radius);
-  opacity: 0;
-  transition: opacity 0.35s var(--ease);
-  display: flex;
-  align-items: flex-end;
-  padding: 18px;
-  pointer-events: none;
-}
-.masonry-item:hover .caption { opacity: 1; }
-.caption span {
-  font-family: 'Cormorant Garamond', serif;
-  font-style: italic;
-  font-size: 15px;
-  color: rgba(255,255,255,0.9);
-  letter-spacing: 0.02em;
-  flex: 1;
-}
-
-/* Delete button (admin mode) */
-.delete-btn {
-  display: none;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 28px;
-  height: 28px;
-  background: rgba(10,9,8,0.7);
-  color: rgba(255,255,255,0.8);
-  border: none;
-  border-radius: 50%;
-  font-size: 15px;
-  line-height: 1;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  transition: background 0.2s;
-}
-.delete-btn:hover { background: rgba(180,40,40,0.85); color: #fff; }
-body.admin-mode .delete-btn { display: flex; }
-
-/* ── Divider ── */
-.divider {
-  width: 48px;
-  height: 1px;
-  background: var(--accent);
-  margin: 0 auto;
-  opacity: 0.45;
-}
-
-/* ── About ── */
-#about {
-  padding: 80px 48px;
-  max-width: 680px;
-  margin: 0 auto;
-  text-align: center;
-}
-.about-text .section-label { margin-bottom: 24px; justify-content: center; }
-.about-text .section-label::after { display: none; }
-.about-text h2 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 300;
-  font-size: clamp(32px, 4vw, 48px);
-  line-height: 1.15;
-  margin-bottom: 20px;
-}
-.about-text p {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.85;
-  font-weight: 300;
-}
-@media (max-width: 768px) {
-  #about { padding: 56px 24px; }
-  .gallery-section { padding: 56px 24px; }
-  .hero { padding: 0 24px 48px; }
-}
-
-/* ── Footer ── */
-footer {
-  text-align: center;
-  padding: 48px;
-  color: var(--muted);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border-top: 1px solid rgba(26,24,20,0.08);
-  margin-top: 24px;
-}
-
-/* ── Lightbox ── */
-.lightbox {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(10,9,8,0.96);
-  z-index: 9999;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  cursor: zoom-out;
-}
-.lightbox.open {
-  display: flex;
-  animation: lbFadeIn 0.28s var(--ease);
-}
-@keyframes lbFadeIn { from { opacity:0; } to { opacity:1; } }
-.lightbox img {
-  max-width: 100%;
-  max-height: 92vh;
-  border-radius: 6px;
-  object-fit: contain;
-  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-  animation: lbScale 0.32s var(--ease);
-  cursor: default;
-}
-@keyframes lbScale {
-  from { transform:scale(0.93); opacity:0; }
-  to   { transform:scale(1);    opacity:1; }
-}
-.lightbox-close {
-  position: absolute;
-  top: 18px; right: 26px;
-  color: rgba(255,255,255,0.5);
-  font-size: 36px;
-  cursor: pointer;
-  line-height: 1;
-  transition: color 0.2s;
-  background: none; border: none;
-  font-family: inherit;
-}
-.lightbox-close:hover { color: var(--white); }
-.lightbox-prev, .lightbox-next {
-  position: absolute;
-  top: 50%; transform: translateY(-50%);
-  color: rgba(255,255,255,0.45);
-  font-size: 44px;
-  cursor: pointer;
-  background: none; border: none;
-  font-family: inherit;
-  line-height: 1; padding: 16px;
-  transition: color 0.2s;
-  user-select: none;
-}
-.lightbox-prev { left: 8px; }
-.lightbox-next { right: 8px; }
-.lightbox-prev:hover, .lightbox-next:hover { color: var(--white); }
-.lightbox-counter {
-  position: absolute;
-  bottom: 20px; left: 50%; transform: translateX(-50%);
-  color: rgba(255,255,255,0.35);
-  font-size: 11px; letter-spacing: 0.15em;
-  font-family: 'Jost', sans-serif;
-}
-
-/* ── Login modal ── */
-.modal-backdrop {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(10,9,8,0.6);
-  z-index: 8000;
-  align-items: center;
-  justify-content: center;
-}
-.modal-backdrop.open {
-  display: flex;
-  animation: lbFadeIn 0.22s var(--ease);
-}
-.modal {
-  background: var(--white);
-  border-radius: 16px;
-  padding: 40px;
-  width: 100%;
-  max-width: 380px;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.18);
-}
-.modal h3 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 300;
-  font-size: 26px;
-  margin-bottom: 6px;
-}
-.modal p.modal-sub {
-  font-size: 12px;
-  color: var(--muted);
-  letter-spacing: 0.05em;
-  margin-bottom: 28px;
-}
-.modal input[type="password"],
-.modal input[type="text"] {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid rgba(26,24,20,0.15);
-  border-radius: 8px;
-  font-family: 'Jost', sans-serif;
-  font-size: 14px;
-  background: var(--bg);
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.2s;
-  margin-bottom: 14px;
-}
-.modal input:focus { border-color: var(--ink); }
-.modal-error {
-  font-size: 12px;
-  color: #c0392b;
-  margin-bottom: 12px;
-  min-height: 18px;
-}
-.modal-btn {
-  width: 100%;
-  padding: 13px;
-  background: var(--ink);
-  color: var(--white);
-  border: none;
-  border-radius: 8px;
-  font-family: 'Jost', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.modal-btn:hover { opacity: 0.85; }
-.modal-cancel {
-  display: block;
-  text-align: center;
-  margin-top: 14px;
-  font-size: 12px;
-  color: var(--muted);
-  cursor: pointer;
-  letter-spacing: 0.05em;
-}
-.modal-cancel:hover { color: var(--ink); }
-
-/* ── Upload panel ── */
-.upload-panel {
-  display: none;
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 7000;
-  background: var(--white);
-  border-radius: 16px;
-  padding: 28px 28px 24px;
-  width: 320px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.16);
-  animation: lbFadeIn 0.25s var(--ease);
-}
-body.admin-mode .upload-panel { display: block; }
-
-.upload-panel h4 {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 400;
-  font-size: 18px;
-  margin-bottom: 18px;
-}
-
-.upload-panel select,
-.upload-panel input[type="text"] {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid rgba(26,24,20,0.15);
-  border-radius: 8px;
-  font-family: 'Jost', sans-serif;
-  font-size: 13px;
-  background: var(--bg);
-  color: var(--ink);
-  outline: none;
-  margin-bottom: 12px;
-  transition: border-color 0.2s;
-}
-.upload-panel select:focus,
-.upload-panel input:focus { border-color: var(--ink); }
-
-/* Drop zone */
-.drop-zone {
-  border: 1.5px dashed rgba(26,24,20,0.2);
-  border-radius: 10px;
-  padding: 22px 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-  margin-bottom: 14px;
-  position: relative;
-}
-.drop-zone:hover, .drop-zone.drag-over {
-  border-color: var(--accent);
-  background: rgba(181,146,76,0.05);
-}
-.drop-zone input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
-.drop-zone-icon { font-size: 26px; margin-bottom: 6px; }
-.drop-zone p {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-.drop-zone .chosen-file {
-  font-size: 12px;
-  color: var(--ink);
-  margin-top: 6px;
-  font-style: italic;
-}
-
-/* Preview thumbnail */
-#upload-preview {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 12px;
-  display: none;
-  max-height: 140px;
-  object-fit: cover;
-}
-
-.upload-btn {
-  width: 100%;
-  padding: 12px;
-  background: var(--ink);
-  color: var(--white);
-  border: none;
-  border-radius: 8px;
-  font-family: 'Jost', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.upload-btn:hover { opacity: 0.85; }
-.upload-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-.upload-status {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 10px;
-  min-height: 18px;
-  text-align: center;
-}
+:root{--bg:#E9E9E7;--surface:#FFFFFF;--ink:#1A1A1A;--muted:#666666;--line:#D0D0CC;--accent:#C62828;--accent-ink:#FFFFFF;--plate:#D5D5D0;--tint:#F0E4E4;--danger:#B3261E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-mode="dark"]{--bg:#121212;--surface:#1C1C1C;--ink:#EDEDED;--muted:#9A9A9A;--line:#333333;--accent:#EF5350;--accent-ink:#140808;--plate:#CFCFCA;--tint:#2A1C1C;--danger:#FF8A80}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.45 Barlow,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:520px;margin:0 auto;padding:20px 16px 90px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+h1,h2,.big,.save,.badge,.tabs button,.chipbig,.userbtn{font-family:"Barlow Condensed","Arial Narrow",sans-serif}
+h1{font-size:34px;line-height:1;margin:0;font-weight:700}
+h2{font-size:22px;line-height:1.1;margin:0 0 12px;font-weight:700}
+.date{color:var(--muted);font-size:14px;margin-top:4px}
+.plate{width:44px;height:44px;border-radius:50%;background:var(--plate);display:grid;place-items:center;flex:none}
+.plate::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--bg)}
+.userbtn{border:0;background:var(--plate);color:#1A1A1A;font-weight:700;font-size:17px;border-radius:999px;min-height:44px;padding:0 16px;cursor:pointer}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--line);padding:4px;border-radius:12px;margin-bottom:18px}
+.tabs button{font-weight:700;font-size:20px;border:0;background:transparent;color:var(--muted);border-radius:9px;min-height:44px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}
+label,.lbl{display:block;font-size:14px;color:var(--muted);margin-bottom:5px}
+input{width:100%;font:600 18px Barlow,system-ui,sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:12px;min-height:48px}
+input:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chips button,.chipbig{font:600 16px Barlow,sans-serif;min-height:46px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.chipbig{font-size:22px;font-weight:700;min-height:56px}
+.chips button[aria-checked="true"],.chipbig[aria-checked="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.plist{display:grid;gap:8px}
+.ref{background:var(--tint);border-radius:14px;padding:16px 18px;margin-bottom:18px;border-left:6px solid var(--plate)}
+.ref h2{margin-bottom:2px}.sub{color:var(--muted);font-size:14px;margin-bottom:8px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.gap{margin-top:14px}
+.stepper{display:grid;grid-template-columns:56px 1fr 56px;gap:8px}
+.stepper button{font:700 22px Barlow,sans-serif;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;min-height:48px;cursor:pointer}
+.stepper input{text-align:center}
+.save{width:100%;margin-top:18px;min-height:54px;border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:22px;cursor:pointer}
+.save:disabled{opacity:.6}
+.hint{font-size:14px;color:var(--muted);margin-top:8px}.hint b{color:var(--ink);font-weight:600}
+.err{color:var(--danger);font-size:14px;margin-top:10px;min-height:1px}
+.summary{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:14px;margin:-4px 0 10px}.summary b{color:var(--ink);font-weight:600}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+li:first-child{border-top:0}
+.ref li{border-color:rgba(127,127,127,.25)}
+.name{font-weight:600}.detail{color:var(--muted);font-size:14px}
+.big{font-weight:700;font-size:22px;white-space:nowrap}
+.small-btn{border:1.5px solid var(--accent);background:transparent;color:var(--accent);font:600 14px Barlow,sans-serif;border-radius:8px;min-height:36px;padding:0 12px;cursor:pointer;flex:none}
+.hint .small-btn{margin-left:8px}
+.empty{color:var(--muted);display:block;padding:4px 0}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:10px}
+summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 18px;min-height:56px;cursor:pointer;font-weight:600}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"▾";color:var(--muted)}
+details[open] summary::after{transform:rotate(180deg)}
+summary .l{display:flex;align-items:center;gap:12px;flex:1}
+.badge{background:var(--plate);color:#1A1A1A;border-radius:999px;padding:2px 12px;font-weight:700;font-size:16px}
+details .body{padding:0 18px 10px}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--ink);padding:18px;width:min(420px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+.dlg-row{display:flex;justify-content:space-between}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;font:500 14px Barlow,sans-serif;cursor:pointer;padding:12px 0}
+.danger{color:var(--danger)}
+.themebtn{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-size:22px;cursor:pointer;z-index:6;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;opacity:0;transition:.2s;pointer-events:none;z-index:7;max-width:80vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<!-- ── Header ── -->
-<header>
-  <a class="logo" href="index.html"><h2>My Photography</h2></a>
-  <button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">☰</button>
-  <nav id="nav-menu">
-    <a href="#landscape">Landscape</a>
-    <a href="#wildlife">Wildlife</a>
-    <a href="#astro">Astro</a>
-    <a href="#about">About</a>
-    <button class="nav-admin-btn" id="admin-toggle-btn" onclick="handleAdminBtn()">Admin</button>
-  </nav>
-</header>
+<main id="boot"><p class="empty">Loading…</p></main>
 
-<!-- ── Hero ── -->
-<section class="hero">
-  <div class="hero-content">
-    <h1>Steven Salazar</h1>
-    <p>Landscape &nbsp;·&nbsp; Wildlife &nbsp;·&nbsp; Astro</p>
+<main id="pick" hidden>
+  <header><div><h1>Gym Log</h1><div class="date">Who’s lifting?</div></div><div class="plate" aria-hidden="true"></div></header>
+  <section class="card">
+    <div class="tabs" role="tablist" style="margin-bottom:14px">
+      <button role="tab" id="a-in" aria-selected="true" type="button">Sign in</button>
+      <button role="tab" id="a-new" aria-selected="false" type="button">Create user</button>
+    </div>
+    <div id="plwrap"><span class="lbl" id="pl-l">Select user</span><div class="plist" id="plist" role="radiogroup" aria-labelledby="pl-l"></div></div>
+    <div id="nwrap" hidden><label for="pname">Name</label><input id="pname" autocomplete="username" autocapitalize="none" autocorrect="off" maxlength="20"></div>
+    <div class="gap"><label for="ppw">Password</label><input id="ppw" type="password" autocomplete="current-password"></div>
+    <div class="gap" id="cwrap" hidden><label for="ppw2">Confirm password</label><input id="ppw2" type="password" autocomplete="new-password"></div>
+    <div class="err" id="aerr" role="alert"></div>
+    <button class="save" id="padd" type="button">Sign in</button>
+  </section>
+</main>
+
+<main id="app" hidden>
+  <header>
+    <div><h1>Gym Log</h1><div class="date" id="today"></div></div>
+    <button class="userbtn" id="who" type="button" aria-label="Sign out"></button>
+  </header>
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-log" aria-selected="true" aria-controls="view-log">Log</button>
+    <button role="tab" id="tab-hist" aria-selected="false" aria-controls="view-hist">History</button>
   </div>
-</section>
 
-<!-- ── Landscape ── -->
-<div class="gallery-section" id="landscape">
-  <div class="section-label">Landscape</div>
-  <div class="masonry" data-gallery="landscape">
+  <div id="view-log" role="tabpanel" aria-labelledby="tab-log">
+    <section class="card">
+      <span class="lbl" id="type-l">Today’s workout</span>
+      <div class="chips" id="types" role="radiogroup" aria-labelledby="type-l"></div>
+    </section>
+    <div class="ref" id="ref" aria-live="polite"></div>
+    <section class="card" aria-labelledby="add-h">
+      <h2 id="add-h">Log an exercise</h2>
+      <label for="ex">Exercise</label>
+      <input id="ex" placeholder="Bench press" autocomplete="off">
+      <div class="hint" id="exhint" aria-live="polite"></div>
+      <div class="row">
+        <div><label for="sets">Sets</label><input id="sets" type="number" inputmode="numeric" min="1" value="3"></div>
+        <div><label for="reps">Reps</label><input id="reps" type="number" inputmode="numeric" min="1" value="10"></div>
+      </div>
+      <div class="gap">
+        <label for="wt">Weight (lb)</label>
+        <div class="stepper">
+          <button type="button" id="minus" aria-label="Subtract 5 pounds">−5</button>
+          <input id="wt" type="number" inputmode="decimal" min="0" step="2.5" value="135">
+          <button type="button" id="plus" aria-label="Add 5 pounds">+5</button>
+        </div>
+      </div>
+      <div class="gap"><label for="rpe">RPE (1–10, optional)</label><input id="rpe" type="number" inputmode="decimal" min="1" max="10" step="0.5" placeholder="8"></div>
+      <button class="save" id="save" type="button">Save exercise</button>
+    </section>
+    <section class="card" aria-labelledby="log-h">
+      <h2 id="log-h">Today</h2>
+      <div class="summary" id="summary"></div>
+      <ul id="list"></ul>
+    </section>
   </div>
-</div>
 
-<div class="divider"></div>
+  <div id="view-hist" role="tabpanel" aria-labelledby="tab-hist" hidden><div id="hist"></div></div>
+</main>
 
-<!-- ── Wildlife ── -->
-<div class="gallery-section" id="wildlife">
-  <div class="section-label">Wildlife</div>
-  <div class="masonry" data-gallery="wildlife">
-  </div>
-</div>
+<dialog id="dlg" aria-labelledby="dlg-h">
+  <h2 id="dlg-h">Edit exercise</h2>
+  <label for="e-name">Exercise</label><input id="e-name">
+  <div class="row"><div><label for="e-sets">Sets</label><input id="e-sets" type="number" inputmode="numeric" min="1"></div><div><label for="e-reps">Reps</label><input id="e-reps" type="number" inputmode="numeric" min="1"></div></div>
+  <div class="row"><div><label for="e-wt">Weight (lb)</label><input id="e-wt" type="number" inputmode="decimal" min="0" step="2.5"></div><div><label for="e-rpe">RPE</label><input id="e-rpe" type="number" inputmode="decimal" min="1" max="10" step="0.5"></div></div>
+  <button class="save" id="e-save" type="button">Save changes</button>
+  <div class="dlg-row"><button class="link" id="e-cancel" type="button">Cancel</button><button class="link danger" id="e-del" type="button">Delete exercise</button></div>
+</dialog>
 
-<div class="divider"></div>
+<div class="toast" id="toast" role="status"></div>
+<button class="themebtn" id="themebtn" type="button" aria-label="Switch to dark mode" aria-pressed="false">🌙</button>
 
-<!-- ── Astro ── -->
-<div class="gallery-section" id="astro">
-  <div class="section-label">Astro</div>
-  <div class="masonry" data-gallery="astro">
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- ── About ── -->
-<section id="about">
-  <div class="about-text">
-    <div class="section-label">About Me</div>
-    <h2>Steven Salazar</h2>
-    <p>Photographer based in Colorado, drawn to landscapes, wildlife, and the night sky.</p>
-  </div>
-</section>
-
-<footer>© 2026 Steven Salazar Jr. &nbsp;·&nbsp; All rights reserved</footer>
-
-<!-- ── Lightbox ── -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" onclick="closeLightbox()">×</button>
-  <button class="lightbox-prev" onclick="shiftImage(-1)">‹</button>
-  <img id="lightbox-img" src="" alt="">
-  <button class="lightbox-next" onclick="shiftImage(1)">›</button>
-  <div class="lightbox-counter" id="lightbox-counter"></div>
-</div>
-
-<!-- ── Login modal ── -->
-<div class="modal-backdrop" id="login-modal">
-  <div class="modal">
-    <h3>Admin Login</h3>
-    <p class="modal-sub">Enter your password to manage the gallery</p>
-    <input type="password" id="login-pw" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
-    <div class="modal-error" id="login-error"></div>
-    <button class="modal-btn" onclick="doLogin()">Sign In</button>
-    <span class="modal-cancel" onclick="closeLoginModal()">Cancel</span>
-  </div>
-</div>
-
-<!-- ── Upload panel ── -->
-<div class="upload-panel" id="upload-panel">
-  <h4>Add Photo</h4>
-  <select id="upload-category">
-    <option value="landscape">Landscape</option>
-    <option value="wildlife">Wildlife</option>
-    <option value="astro">Astro</option>
-  </select>
-  <input type="text" id="upload-caption" placeholder="Caption (optional)">
-  <img id="upload-preview" src="" alt="Preview">
-  <div class="drop-zone" id="drop-zone">
-    <input type="file" id="upload-file" accept="image/*" onchange="handleFileSelect(this.files[0])">
-    <div class="drop-zone-icon">🖼</div>
-    <p>Click or drag & drop an image</p>
-    <div class="chosen-file" id="chosen-file-name"></div>
-  </div>
-  <button class="upload-btn" id="upload-btn" onclick="doUpload()" disabled>Add to Gallery</button>
-  <div class="upload-status" id="upload-status"></div>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
-/* ═══════════════════════════════════════
-   CONFIG
-═══════════════════════════════════════ */
-const ADMIN_PASSWORD  = 'photo2026';                          // change this
-const CLOUDINARY_NAME = 'dg068w2uf';
-const CLOUDINARY_PRESET = 'photography_upload';
-const SUPABASE_URL    = 'https://ldzirnmjahukapoxjkxz.supabase.co';
-const SUPABASE_KEY    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxkemlybm1qYWh1a2Fwb3hqa3h6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkwMzcwMDUsImV4cCI6MjA5NDYxMzAwNX0.rodxTAprEFhr1eC29UXTkK3SuSF0SyiKlQ0nTju9w2I';
+/* ===== SETTINGS: paste your two Supabase values here ===== */
+const CFG = {
+  url: "https://gaelmxyshvgrsmqcatmq.supabase.co",            
+  key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhZWxteHlzaHZncnNtcWNhdG1xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4MDY4MjMsImV4cCI6MjEwODM4MjgyM30.3_V6kqfaQXmkekR1uJdZgH8qzhBsu2RjJ9W7jEaE7Gg"  // NEVER paste the service_role / secret key
+};
+/* ========================================================= */
+const DOMAIN="gym.stevensalazarjr.com", PFX="gymlog::";
+const TYPES=["Push","Pull","Legs","Upper","Lower","Full Body"];
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+const iso=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const fmt=(s,long)=>{const[a,b,c]=s.split("-");return new Date(+a,b-1,+c).toLocaleDateString(undefined,long?{weekday:"long",month:"long",day:"numeric"}:{weekday:"short",month:"short",day:"numeric"})};
+const esc=s=>{const d=document.createElement("div");d.textContent=s;return d.innerHTML};
+const line=e=>`${e.sets} × ${e.reps} @ ${e.weight} lb`+(e.rpe?` · RPE ${e.rpe}`:"");
+const emailOf=u=>u.toLowerCase()+"@"+DOMAIN;
+const COLS="id,name,sets,reps,weight,rpe,created_at";
+const NOT_SET="Not connected yet: paste your Supabase URL and key into the SETTINGS block near the bottom of index.html.";
+let sb,me=null,uname="",W={},users=[],sel=null,mode="in",tk=iso(new Date()),editing=null,hintE=null,busy=false;
 
-/* ── Supabase helpers ── */
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),2200)}
+const fail=e=>toast((e&&e.message)||"Something went wrong");
 
-async function sbFetch(path, opts = {}){
-  const { headers: extraHeaders, ...restOpts } = opts;
-  const res = await fetch(SUPABASE_URL + path, {
-    ...restOpts,
-    headers: {
-      'apikey': SUPABASE_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_KEY,
-      'Content-Type': 'application/json',
-      ...(extraHeaders || {})
+/* ---------- theme ---------- */
+let themeMode="light";try{themeMode=localStorage.getItem("gymlog-mode")||"light"}catch(e){}
+function applyMode(m){
+  themeMode=m;document.documentElement.setAttribute("data-mode",m);
+  const b=$("themebtn");b.textContent=m==="dark"?"☀️":"🌙";
+  b.setAttribute("aria-label",m==="dark"?"Switch to light mode":"Switch to dark mode");b.setAttribute("aria-pressed",m==="dark");
+  try{localStorage.setItem("gymlog-mode",m)}catch(e){}
+}
+$("themebtn").onclick=()=>applyMode(themeMode==="dark"?"light":"dark");
+applyMode(themeMode==="dark"?"dark":"light");
+
+/* ---------- sign in / create user ---------- */
+function setMode(m){
+  mode=m;
+  $("a-in").setAttribute("aria-selected",m==="in");$("a-new").setAttribute("aria-selected",m==="new");
+  $("plwrap").hidden=m!=="in";$("nwrap").hidden=m==="in";$("cwrap").hidden=m==="in";
+  $("padd").textContent=m==="in"?"Sign in":"Create user";
+  $("aerr").textContent="";$("ppw").value="";$("ppw2").value="";
+  $("ppw").autocomplete=m==="in"?"current-password":"new-password";
+}
+function renderPlist(){
+  $("plist").innerHTML=users.length?users.map(u=>`<button type="button" class="chipbig" role="radio" aria-checked="${u===sel}" data-u="${esc(u)}">${esc(u)}</button>`).join(""):'<span class="empty">No users yet. Use Create user.</span>';
+}
+async function showAuth(){
+  me=null;W={};$("boot").hidden=true;$("app").hidden=true;$("pick").hidden=false;
+  const{data,error}=await sb.from("profiles").select("username").order("username");
+  users=error?[]:data.map(r=>r.username);
+  if(!users.includes(sel))sel=users.length===1?users[0]:null;
+  setMode(users.length?"in":"new");renderPlist();
+}
+$("a-in").onclick=()=>setMode("in");
+$("a-new").onclick=()=>{setMode("new")};
+$("plist").onclick=ev=>{const b=ev.target.closest("[data-u]");if(!b)return;sel=b.dataset.u;$("aerr").textContent="";renderPlist();$("ppw").focus()};
+async function submitAuth(){
+  if(!sb){$("aerr").textContent=NOT_SET;return}
+  if(busy)return;
+  const err=m=>{$("aerr").textContent=m},p=$("ppw").value;
+  err("");busy=true;$("padd").disabled=true;
+  try{
+    if(mode==="in"){
+      if(!sel){err("Select a user.");return}
+      if(!p){err("Enter your password.");return}
+      const{error}=await sb.auth.signInWithPassword({email:emailOf(sel),password:PFX+p});
+      if(error)err(/invalid/i.test(error.message)?"Wrong password.":error.message);
+    }else{
+      const n=$("pname").value.trim();
+      if(!/^[A-Za-z0-9_]{2,20}$/.test(n)){err("Name: 2–20 letters, numbers or underscores.");return}
+      if(!p){err("Enter a password.");return}
+      if(p!==$("ppw2").value){err("Passwords don’t match.");return}
+      const{data,error}=await sb.auth.signUp({email:emailOf(n),password:PFX+p,options:{data:{username:n}}});
+      if(error)err(/registered|exists/i.test(error.message)?"That name is taken.":error.message);
+      else if(!data.session)err("Account created, but Supabase still wants email confirmation. Turn it off in Authentication settings.");
     }
+  }catch(e){err(e.message)}finally{busy=false;$("padd").disabled=false}
+}
+$("padd").onclick=submitAuth;
+["ppw","ppw2","pname"].forEach(id=>$(id).addEventListener("keydown",e=>{if(e.key==="Enter")submitAuth()}));
+$("who").onclick=()=>sb.auth.signOut();
+
+/* ---------- load data ---------- */
+async function enter(user){
+  uname=(user.user_metadata&&user.user_metadata.username)||(user.email||"").split("@")[0];
+  const{data,error}=await sb.from("workouts").select("id,day,type,entries("+COLS+")");
+  if(error){fail(error);me=null;showAuth();return}
+  W={};
+  data.forEach(w=>{w.entries.sort((a,b)=>a.created_at<b.created_at?-1:1);W[w.day]={id:w.id,type:w.type,entries:w.entries}});
+  tk=iso(new Date());$("today").textContent=fmt(tk,true);$("who").textContent=uname+" · Sign out";
+  $("ppw").value="";$("boot").hidden=true;$("pick").hidden=true;$("app").hidden=false;
+  $("ex").value="";updateHint();showTab("log");renderAll();
+}
+
+/* ---------- rendering ---------- */
+const todayW=()=>W[tk];
+function lastOfType(t){
+  const ks=Object.keys(W).filter(k=>k<tk&&W[k].type===t&&W[k].entries.length).sort();
+  return ks.length?ks[ks.length-1]:null;
+}
+function renderTypes(){
+  const cur=todayW()?todayW().type:null;
+  $("types").innerHTML=TYPES.map(t=>`<button type="button" role="radio" aria-checked="${t===cur}" data-t="${t}">${t}</button>`).join("");
+}
+function renderRef(){
+  const w=todayW(),r=$("ref");
+  if(!w){r.innerHTML='<span class="empty">Pick today’s workout type to see what you did last time.</span>';return}
+  const k=lastOfType(w.type);
+  if(!k){r.innerHTML=`<h2>Last ${esc(w.type)} day</h2><span class="empty">No earlier ${esc(w.type)} day logged yet.</span>`;return}
+  r.innerHTML=`<h2>Last ${esc(w.type)} day</h2><div class="sub">${fmt(k,true)}</div><ul>`+W[k].entries.map(e=>
+    `<li><div><div class="name">${esc(e.name)}</div><div class="detail">${line(e)}</div></div><button class="small-btn" data-use="${e.id}" data-k="${k}">Use</button></li>`).join("")+"</ul>";
+}
+function renderToday(){
+  const w=todayW(),list=$("list");
+  if(!w||!w.entries.length){list.innerHTML='<li><span class="empty">Nothing logged yet. Save your first exercise above.</span></li>';$("summary").innerHTML="";return}
+  let vol=0,n=0;
+  list.innerHTML=w.entries.map(e=>{vol+=e.sets*e.reps*e.weight;n+=e.sets;
+    return `<li><div><div class="name">${esc(e.name)}</div><div class="detail">${e.sets} × ${e.reps}${e.rpe?" · RPE "+e.rpe:""}</div></div><div class="big">${e.weight} lb</div><button class="small-btn" data-edit="${e.id}" data-k="${tk}" aria-label="Edit ${esc(e.name)}">Edit</button></li>`}).join("");
+  $("summary").innerHTML=`<span><b>${esc(w.type)}</b></span><span><b>${w.entries.length}</b> exercises</span><span><b>${n}</b> sets</span><span><b>${Math.round(vol).toLocaleString()}</b> lb volume</span>`;
+}
+function renderHist(){
+  const ks=Object.keys(W).filter(k=>W[k].entries.length).sort().reverse();
+  if(!ks.length){$("hist").innerHTML='<section class="card"><span class="empty">No workouts yet. Log one and it will show up here.</span></section>';return}
+  const op={};document.querySelectorAll("#hist details[open]").forEach(d=>op[d.dataset.k]=1);
+  $("hist").innerHTML=ks.map(k=>`<details data-k="${k}"${op[k]?" open":""}><summary><span class="l"><span>${fmt(k)}</span><span class="badge">${esc(W[k].type)}</span></span></summary><div class="body"><ul>`+
+    W[k].entries.map(e=>`<li><div><div class="name">${esc(e.name)}</div><div class="detail">${line(e)}</div></div><button class="small-btn" data-edit="${e.id}" data-k="${k}" aria-label="Edit ${esc(e.name)}">Edit</button></li>`).join("")+"</ul></div></details>").join("");
+}
+const renderAll=()=>{renderTypes();renderRef();renderToday();renderHist()};
+function showTab(t){
+  const h=t==="hist";
+  $("view-log").hidden=h;$("view-hist").hidden=!h;
+  $("tab-log").setAttribute("aria-selected",!h);$("tab-hist").setAttribute("aria-selected",h);
+  if(h)renderHist();
+}
+$("tab-log").onclick=()=>showTab("log");
+$("tab-hist").onclick=()=>showTab("hist");
+
+/* ---------- actions ---------- */
+$("types").onclick=async ev=>{
+  const b=ev.target.closest("button");if(!b)return;
+  const t=b.dataset.t,w=todayW();
+  if(w){
+    const{error}=await sb.from("workouts").update({type:t}).eq("id",w.id);
+    if(error)return fail(error);w.type=t;
+  }else{
+    const{data,error}=await sb.from("workouts").insert({user_id:me,day:tk,type:t}).select("id").single();
+    if(error)return fail(error);W[tk]={id:data.id,type:t,entries:[]};
+  }
+  renderAll();
+};
+const loadInto=e=>{$("ex").value=e.name;$("sets").value=e.sets;$("reps").value=e.reps;$("wt").value=e.weight;$("rpe").value=e.rpe||"";updateHint()};
+$("ref").onclick=ev=>{
+  const b=ev.target.closest("[data-use]");if(!b)return;
+  const e=W[b.dataset.k].entries.find(x=>x.id===b.dataset.use);
+  loadInto(e);toast("Loaded "+e.name+" – adjust and save");$("wt").focus();
+};
+const bump=n=>{$("wt").value=Math.max(0,(parseFloat($("wt").value)||0)+n)};
+$("minus").onclick=()=>bump(-5);$("plus").onclick=()=>bump(5);
+function lastOfExercise(name){
+  const n=name.trim().toLowerCase();if(!n)return null;let best=null;
+  Object.keys(W).sort().forEach(k=>{if(k>=tk)return;W[k].entries.forEach(e=>{if(e.name.trim().toLowerCase()===n)best={k,e,t:W[k].type}})});
+  return best;
+}
+function updateHint(){
+  hintE=lastOfExercise($("ex").value);
+  $("exhint").innerHTML=hintE?`Last time, ${fmt(hintE.k)} (${esc(hintE.t)}): <b>${line(hintE.e)}</b><button class="small-btn" type="button">Use</button>`:"";
+}
+$("ex").addEventListener("input",updateHint);
+$("exhint").onclick=ev=>{if(ev.target.closest("button")&&hintE){const{e}=hintE;$("sets").value=e.sets;$("reps").value=e.reps;$("wt").value=e.weight;$("rpe").value=e.rpe||"";$("wt").focus()}};
+
+function readFields(ids){
+  const[n,s,r,w,p]=ids.map($);
+  const name=n.value.trim(),sets=parseInt(s.value,10),reps=parseInt(r.value,10),weight=parseFloat(w.value),rpe=parseFloat(p.value);
+  if(!name||!(sets>0)||!(reps>0)||isNaN(weight)||weight<0)return"Check exercise, sets, reps and weight";
+  if(!isNaN(rpe)&&(rpe<1||rpe>10))return"RPE must be between 1 and 10";
+  return{name,sets,reps,weight,rpe:isNaN(rpe)?null:rpe};
+}
+$("save").onclick=async()=>{
+  const w=todayW();if(!w)return toast("Pick a workout type first");
+  const v=readFields(["ex","sets","reps","wt","rpe"]);if(typeof v==="string")return toast(v);
+  $("save").disabled=true;
+  const{data,error}=await sb.from("entries").insert({workout_id:w.id,user_id:me,...v}).select(COLS).single();
+  $("save").disabled=false;
+  if(error)return fail(error);
+  w.entries.push(data);renderToday();renderHist();
+  toast("Saved "+v.name);$("ex").value="";$("rpe").value="";updateHint();$("ex").focus();
+};
+document.addEventListener("click",ev=>{
+  const b=ev.target.closest("[data-edit]");if(!b)return;
+  const k=b.dataset.k,e=W[k].entries.find(x=>x.id===b.dataset.edit);
+  editing={k,id:e.id};
+  $("e-name").value=e.name;$("e-sets").value=e.sets;$("e-reps").value=e.reps;$("e-wt").value=e.weight;$("e-rpe").value=e.rpe||"";
+  $("dlg-h").textContent="Edit exercise – "+fmt(k);$("dlg").showModal();
+});
+$("e-cancel").onclick=()=>$("dlg").close();
+$("e-save").onclick=async()=>{
+  const v=readFields(["e-name","e-sets","e-reps","e-wt","e-rpe"]);if(typeof v==="string")return toast(v);
+  const{data,error}=await sb.from("entries").update(v).eq("id",editing.id).select(COLS).single();
+  if(error)return fail(error);
+  const a=W[editing.k].entries,i=a.findIndex(x=>x.id===editing.id);a[i]=data;
+  $("dlg").close();renderAll();updateHint();toast("Changes saved");
+};
+$("e-del").onclick=async()=>{
+  if(!confirm("Delete this exercise?"))return;
+  const w=W[editing.k],{error}=await sb.from("entries").delete().eq("id",editing.id);
+  if(error)return fail(error);
+  w.entries=w.entries.filter(x=>x.id!==editing.id);
+  if(!w.entries.length&&editing.k!==tk){await sb.from("workouts").delete().eq("id",w.id);delete W[editing.k]}
+  $("dlg").close();renderAll();updateHint();toast("Deleted");
+};
+
+/* ---------- start ---------- */
+if(CFG.url.startsWith("PASTE")||CFG.key.startsWith("PASTE")){
+  $("boot").hidden=true;$("pick").hidden=false;setMode("new");
+  $("aerr").textContent=NOT_SET;
+}else{
+  sb=supabase.createClient(CFG.url,CFG.key);
+  sb.auth.onAuthStateChange((ev,s)=>{
+    if(s){if(me!==s.user.id){me=s.user.id;setTimeout(()=>enter(s.user),0)}}
+    else setTimeout(showAuth,0);
   });
-  if(!res.ok){
-    const err = await res.text();
-    throw new Error('Supabase error: ' + err);
-  }
-  return res.status === 204 ? null : res.json();
 }
-
-/* ═══════════════════════════════════════
-   STATE
-═══════════════════════════════════════ */
-let isAdmin        = false;
-let galleries      = {};
-let currentGallery = null;
-let currentIndex   = 0;
-let pendingFile    = null;
-
-/* ═══════════════════════════════════════
-   MOBILE NAV
-═══════════════════════════════════════ */
-function toggleMenu(){
-  document.getElementById('nav-menu').classList.toggle('active');
-}
-
-/* ═══════════════════════════════════════
-   GALLERY INIT
-═══════════════════════════════════════ */
-async function initGalleries(){
-  // 1. Seed galleries object from static HTML
-  document.querySelectorAll('.masonry[data-gallery]').forEach(grid => {
-    const key = grid.dataset.gallery;
-    galleries[key] = Array.from(grid.querySelectorAll('.masonry-item')).map(item => ({
-      src: item.querySelector('img').src,
-      alt: item.querySelector('img').alt,
-      id:  item.dataset.id,
-      db:  false
-    }));
-  });
-
-  // 2. Load uploaded photos from Supabase and append to DOM
-  try {
-    const rows = await sbFetch('/rest/v1/photos?select=*&order=created_at.asc');
-    rows.forEach(row => {
-      if(!galleries[row.gallery]) galleries[row.gallery] = [];
-      if(!galleries[row.gallery].find(p => p.id === String(row.id))){
-        galleries[row.gallery].push({ src: row.url, alt: row.caption, id: String(row.id), db: true });
-        appendPhotoToDOM(row.gallery, row.url, row.caption, String(row.id));
-      }
-    });
-  } catch(e){
-    console.warn('Could not load photos from Supabase:', e.message);
-  }
-
-  rebindGalleryClicks();
-}
-
-function rebindGalleryClicks(){
-  document.querySelectorAll('.masonry[data-gallery]').forEach(grid => {
-    const key = grid.dataset.gallery;
-    Array.from(grid.querySelectorAll('.masonry-item')).forEach((item, i) => {
-      const fresh = item.cloneNode(true);
-      item.parentNode.replaceChild(fresh, item);
-      fresh.dataset.index = i;
-      fresh.addEventListener('click', () => {
-        if(document.body.classList.contains('admin-mode')) return;
-        openLightbox(key, i);
-      });
-      const del = fresh.querySelector('.delete-btn');
-      if(del) del.addEventListener('click', e => {
-        e.stopPropagation();
-        deletePhoto(key, fresh.dataset.id, fresh);
-      });
-    });
-    // Re-sync galleries array from current DOM
-    galleries[key] = Array.from(grid.querySelectorAll('.masonry-item')).map(el => ({
-      src: el.querySelector('img').src,
-      alt: el.querySelector('img').alt,
-      id:  el.dataset.id,
-      db:  !!el.dataset.db
-    }));
-  });
-}
-
-/* ═══════════════════════════════════════
-   DOM HELPERS
-═══════════════════════════════════════ */
-function appendPhotoToDOM(gallery, src, alt, id){
-  const grid = document.querySelector(`.masonry[data-gallery="${gallery}"]`);
-  if(!grid) return;
-  const count = grid.querySelectorAll('.masonry-item').length;
-  const wrap  = document.createElement('div');
-  wrap.className     = 'masonry-item';
-  wrap.dataset.index = count;
-  wrap.dataset.id    = id;
-  wrap.dataset.db    = '1';
-  wrap.innerHTML = `
-    <img src="${src}" alt="${alt || ''}" loading="lazy">
-    <div class="caption"><span>${alt || ''}</span></div>
-    <button class="delete-btn" title="Remove photo">×</button>
-  `;
-  grid.appendChild(wrap);
-}
-
-async function deletePhoto(gallery, id, element){
-  if(!isAdmin) return;
-  if(!confirm('Remove this photo from the gallery?')) return;
-  // Only attempt DB delete for uploaded (non-default) photos
-  if(!id.startsWith('default-')){
-    try {
-      await sbFetch(`/rest/v1/photos?id=eq.${id}`, { method: 'DELETE' });
-    } catch(e){
-      alert('Could not delete from database: ' + e.message);
-      return;
-    }
-  }
-  element.remove();
-  galleries[gallery] = galleries[gallery].filter(p => p.id !== id);
-  rebindGalleryClicks();
-}
-
-/* ═══════════════════════════════════════
-   LIGHTBOX
-═══════════════════════════════════════ */
-function openLightbox(gallery, index){
-  const grid = document.querySelector(`.masonry[data-gallery="${gallery}"]`);
-  if(!grid) return;
-  galleries[gallery] = Array.from(grid.querySelectorAll('.masonry-item')).map(item => ({
-    src: item.querySelector('img').src,
-    alt: item.querySelector('img').alt,
-    id:  item.dataset.id
-  }));
-  currentGallery = gallery;
-  currentIndex   = index;
-  renderLightboxImage();
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function renderLightboxImage(){
-  const entry = galleries[currentGallery][currentIndex];
-  if(!entry) return;
-  const img = document.getElementById('lightbox-img');
-  img.style.animation = 'none';
-  img.offsetHeight;
-  img.style.animation = '';
-  img.src = entry.src;
-  img.alt = entry.alt || '';
-  document.getElementById('lightbox-counter').textContent =
-    `${currentIndex + 1} / ${galleries[currentGallery].length}`;
-}
-
-function closeLightbox(){
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function shiftImage(dir){
-  const len = galleries[currentGallery].length;
-  currentIndex = (currentIndex + dir + len) % len;
-  renderLightboxImage();
-}
-
-document.getElementById('lightbox').addEventListener('click', e => {
-  if(e.target === document.getElementById('lightbox')) closeLightbox();
-});
-
-document.addEventListener('keydown', e => {
-  if(!document.getElementById('lightbox').classList.contains('open')) return;
-  if(e.key === 'ArrowRight') shiftImage(1);
-  if(e.key === 'ArrowLeft')  shiftImage(-1);
-  if(e.key === 'Escape')     closeLightbox();
-});
-
-/* ═══════════════════════════════════════
-   ADMIN LOGIN / LOGOUT
-═══════════════════════════════════════ */
-function handleAdminBtn(){
-  if(isAdmin){ logOut(); } else { openLoginModal(); }
-}
-
-function openLoginModal(){
-  document.getElementById('login-modal').classList.add('open');
-  document.getElementById('login-pw').value = '';
-  document.getElementById('login-error').textContent = '';
-  setTimeout(() => document.getElementById('login-pw').focus(), 100);
-}
-
-function closeLoginModal(){
-  document.getElementById('login-modal').classList.remove('open');
-}
-
-function doLogin(){
-  const pw = document.getElementById('login-pw').value;
-  if(pw === ADMIN_PASSWORD){
-    isAdmin = true;
-    closeLoginModal();
-    document.body.classList.add('admin-mode');
-    document.getElementById('admin-toggle-btn').textContent = 'Log Out';
-    document.getElementById('admin-toggle-btn').classList.add('active');
-  } else {
-    document.getElementById('login-error').textContent = 'Incorrect password. Try again.';
-    document.getElementById('login-pw').value = '';
-    document.getElementById('login-pw').focus();
-  }
-}
-
-function logOut(){
-  isAdmin = false;
-  document.body.classList.remove('admin-mode');
-  document.getElementById('admin-toggle-btn').textContent = 'Admin';
-  document.getElementById('admin-toggle-btn').classList.remove('active');
-  resetUploadForm();
-}
-
-document.getElementById('login-modal').addEventListener('click', e => {
-  if(e.target === document.getElementById('login-modal')) closeLoginModal();
-});
-
-/* ═══════════════════════════════════════
-   FILE SELECT / PREVIEW
-═══════════════════════════════════════ */
-function handleFileSelect(file){
-  if(!file || !file.type.startsWith('image/')) return;
-  pendingFile = file;
-  document.getElementById('chosen-file-name').textContent = file.name;
-  document.getElementById('upload-btn').disabled = false;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const prev = document.getElementById('upload-preview');
-    prev.src   = e.target.result;
-    prev.style.display = 'block';
-  };
-  reader.readAsDataURL(file);
-}
-
-const dropZone = document.getElementById('drop-zone');
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('drag-over');
-  const file = e.dataTransfer.files[0];
-  if(file) handleFileSelect(file);
-});
-
-/* ═══════════════════════════════════════
-   UPLOAD — Cloudinary → Supabase
-═══════════════════════════════════════ */
-async function doUpload(){
-  if(!pendingFile || !isAdmin) return;
-  const gallery = document.getElementById('upload-category').value;
-  const caption = document.getElementById('upload-caption').value.trim()
-                  || pendingFile.name.replace(/\.[^.]+$/, '');
-  const btn    = document.getElementById('upload-btn');
-  const status = document.getElementById('upload-status');
-
-  btn.disabled = true;
-  status.textContent = 'Uploading to Cloudinary…';
-
-  try {
-    // Step 1: Upload image to Cloudinary
-    const formData = new FormData();
-    formData.append('upload_preset', CLOUDINARY_PRESET);
-    formData.append('folder', 'portfolio');
-    formData.append('file', pendingFile);
-
-    const cdnRes  = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}/image/upload`, {
-      method: 'POST',
-      body: formData
-    });
-    const cdnData = await cdnRes.json();
-    console.log('Cloudinary response:', cdnData);
-    if(!cdnRes.ok) throw new Error('Cloudinary: ' + (cdnData.error?.message || JSON.stringify(cdnData)));
-    const url     = cdnData.secure_url;
-
-    status.textContent = 'Saving to database…';
-
-    // Step 2: Save record to Supabase
-    const rows = await sbFetch('/rest/v1/photos', {
-      method: 'POST',
-      headers: { 'Prefer': 'return=representation' },
-      body: JSON.stringify({ gallery, caption, url })
-    });
-    const newId = String(rows[0].id);
-
-    // Step 3: Add to DOM
-    appendPhotoToDOM(gallery, url, caption, newId);
-    if(!galleries[gallery]) galleries[gallery] = [];
-    galleries[gallery].push({ src: url, alt: caption, id: newId, db: true });
-    rebindGalleryClicks();
-
-    status.textContent = '✓ Photo added!';
-    setTimeout(() => { status.textContent = ''; }, 2500);
-    resetUploadForm();
-
-  } catch(e){
-    status.textContent = '✗ Error: ' + e.message;
-    btn.disabled = false;
-  }
-}
-
-function resetUploadForm(){
-  pendingFile = null;
-  document.getElementById('upload-file').value = '';
-  document.getElementById('upload-caption').value = '';
-  document.getElementById('chosen-file-name').textContent = '';
-  const prev = document.getElementById('upload-preview');
-  prev.src   = '';
-  prev.style.display = 'none';
-  document.getElementById('upload-btn').disabled = true;
-  document.getElementById('upload-status').textContent = '';
-}
-
-/* ═══════════════════════════════════════
-   BOOT
-═══════════════════════════════════════ */
-initGalleries();
 </script>
 </body>
 </html>
